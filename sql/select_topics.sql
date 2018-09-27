@@ -1,8 +1,9 @@
 select
   topics.topic,
+  cluster,
   topics.name, 
-  topic_config,
-  topic_configs.name as config_name,
+  clusters.name as cluster_name,
+  topics.config,
   topics.description, 
   topics.partitions, 
   topics.replicas, 
@@ -15,7 +16,10 @@ select
   topics.updated
 from 
   topics
-join
-  topic_configs using (topic_config)
+join 
+  clusters using (cluster)
+where
+  cluster::varchar(128) = $2 and
+  topics.deleted = false
 order by
   topics.name
