@@ -1,12 +1,13 @@
 select
-  tc.cluster,
+  c.cluster,
   region,
-  tc.name,
-  tc.tags,
-  tc.created,
-  tc.updated
-from clusters tc
+  c.name,
+  r.name as region_name,
+  c.tags,
+  c.created,
+  c.updated
+from clusters c
 join regions r using (region)
 where
-  (tc.cluster::varchar(128) = $1 or tc.name::varchar(128) || '-' || r.name::varchar(128) = $1) and
-  tc.deleted = false
+  (c.cluster::varchar(128) = $1 or c.name::varchar(128) || '-' || r.name::varchar(128) = $1) and
+  c.deleted = false

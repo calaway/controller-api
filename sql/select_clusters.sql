@@ -1,11 +1,11 @@
 select
-  tc.cluster,
+  c.cluster,
   region,
-  tc.name,
-  tc.tags,
-  tc.created,
-  tc.updated
-from clusters tc
+  c.name,
+  r.name as region_name,
+  c.tags,
+  c.created,
+  c.updated
+from clusters c
 join regions r using (region)
-where
-  tc.deleted = false
+where c.deleted = false

@@ -457,6 +457,7 @@ begin
   create table if not exists topics (
     topic uuid not null primary key,
     cluster uuid references clusters("cluster"),
+    region uuid references regions("region"),
     config text not null,
     name text not null unique,
     description text not null,
@@ -464,7 +465,6 @@ begin
     replicas int not null,
     retention_ms int not null,
     cleanup_policy text not null,
-    region text not null,
     organization text not null,
     created timestamptz not null default now(),
     updated timestamptz,
